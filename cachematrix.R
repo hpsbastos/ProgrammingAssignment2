@@ -5,7 +5,7 @@
 
 makeCacheMatrix <- function(x = matrix()) {
 
-    # set & get matrix (setting new matrix resets inverse)
+    # set & get the matrix (setting new matrix resets inverse)
     im <- NULL
     set <- function(s) {
         x <<- s
@@ -13,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
     }
     get <- function() x
 
-    # set & get INVERTED matrix
+    # set & get the INVERTED matrix
     setinverted <- function(inverted) im <<- inverted
     getinverted <- function() im
 
@@ -26,14 +26,19 @@ makeCacheMatrix <- function(x = matrix()) {
 
 ## Function that computes and stores the inverse of a matrix using
 ## the object created by the makeCacheMatrix function.
+## Input: Matrix object created w/ makeCacheMatrix()
+## Output: Inverted matrix
 
 cacheSolve <- function(x, ...) {
-    ## Return a matrix that is the inverse of 'x'
+    ## Already computed? Returns a matrix that is the inverse of 'x'
     im <- x$getinverted()
     if(!is.null(im)) {
         message("getting cached inverted matrix")
         return(im)
     }
+    # Otherwise, gets matrix in makeCacheMatrix() object, 
+    # computes the inverse matrix, stores it in the object
+    # and outputs the inverted matrix.
     data <- x$get()
     im <- solve(data, ...)
     x$setinverted(im)
